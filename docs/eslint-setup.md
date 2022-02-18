@@ -155,4 +155,4 @@ This enables Eslint for the project and formats your code when you save.
 ### Conclusion
 
 This completes the Eslint setup. You should now commit these changes to your git repository.
-Next we will be looking as setting up Husky and Lint Staged.
+Next we will be looking at setting up [Husky and Lint Staged](https://github.com/RichieMerchant/create-react-app-guide/blob/main/docs/husky-and-lint-staged-setup.md).
