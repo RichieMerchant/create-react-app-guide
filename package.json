@@ -22,7 +22,13 @@
     "test": "react-scripts test",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "lint:fix": "eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.ts?(x)": "tsc-files --pretty --noEmit",
+    "*.{ts,tsx,js,jsx}": "eslint --fix",
+    "*.{js,jsx,ts,tsx,md,json}": "prettier --write"
   },
   "browserslist": {
     "production": [
@@ -39,6 +45,8 @@
   "devDependencies": {
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.1"
+    "lint-staged": "^12.3.4",
+    "prettier": "^2.5.1",
+    "tsc-files": "^1.1.3"
   }
 }
