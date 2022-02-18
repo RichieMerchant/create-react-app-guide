@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Install <code>Husky</code> and <code>Lint Staged</code> and run tests.
+          Install <code>Husky</code> and <code>Lint Staged</code>.
         </p>
       </header>
     </div>
