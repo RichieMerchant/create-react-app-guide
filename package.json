@@ -53,6 +53,7 @@
     "cross-env": "^7.0.3",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
     "prettier": "^2.5.1",
     "tsc-files": "^1.1.3"
