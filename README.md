@@ -1,4 +1,4 @@
-# Create React App - Setup Guide
+# Semantic Versioning
 
 In this guide, I will be taking you the steps you need to setup Create React App, ready to build production ready applucations.
 
