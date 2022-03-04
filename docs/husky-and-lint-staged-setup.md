@@ -99,8 +99,8 @@ You should see Husky run `lint-staged`. Because there are no files that match th
 Lets make a change to a file that will trigger the `lint-staged` scripts. Update the `App.tsx` file with the following code.
 
 ```js
-import React from "react";
-import "./App.css";
+import React from 'react';
+import './App.css';
 
 function App() {
   return (
@@ -156,11 +156,11 @@ There are a couple changes to mention.
 4. Update App.test.tsx with the following:
 
 ```js
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-test("renders learn react link", () => {
+test('renders learn react link', () => {
   render(<App />);
   const linkElement = screen.getByText(/lint staged/i);
   expect(linkElement).toBeInTheDocument();
@@ -179,4 +179,4 @@ Jest should run when you commit your files.
 ### Conclusion
 
 This completes the Husky and Lint Stahed setup. You should now commit these changes to your git repository.
-Next we will be looking as setting up semantic versioning.
+Next we will be looking as [setting up semantic versioning](https://github.com/RichieMerchant/create-react-app-guide/blob/main/docs/semantic-release-setup.md).
