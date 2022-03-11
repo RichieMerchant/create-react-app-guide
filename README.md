@@ -1,49 +1,20 @@
-# Github Actions
+# Create React App - Setup Guide
 
-GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.
+In this guide, I will be taking you the steps you need to setup Create React App, ready to build production ready applucations.
 
-## Creating a workflow
+### Pre-requisites
 
-1.  Create a `.github/workflows` directory in your repository on GitHub if this directory does not already exist.
-2.  In the `.github/workflows` directory, create a file named `semantic-release.yml`.
-3.  Copy the following YAML contents into the `semantic-release.yml` file:
+1.  [NodeJS](https://nodejs.org/en/)
+2.  [NPM](https://www.npmjs.com/)
+3.  [VSCode](https://code.visualstudio.com/)
 
-```yaml
-name: Semantic release
+## Setting up your local development environment
 
-on:
-  push:
-    branches:
-      - main
+One of the most important steps before starting your development is setting up your local development environment. There are various ways to set up Node and NPM and if you have them already installed, you can skip this section. This is my prefered way of setting them up.
 
-jobs:
-  tag:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      - name: Install dependencies
-        run: npm ci
-      - name: Semantic release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
-```
+1. Install [Homebrew](https://brew.sh/)
+2. Install Node via Brew: `brew install node`
+3. Install a Node version manager ([n](https://github.com/tj/n) or [nvm](https://github.com/nvm-sh/nvm))
+4. Update to latest NPM: `npm install -g npm@latest`
 
-Lets go through the Github actions yaml to understand what its doing.
-
-- `name: Semantic release`: This is the name displaying within Githubs Actions UI.
-- `branches: - main`: This tells the action when to run. This action will run when a git push occurs on the main branch.
-- `runs-on: ubuntu-latest`: The OS that the container will use ti run the action.
-- `uses: actions/checkout@v3`: Use the Github checkout actions to checkout the project into the container
-- `uses: actions/setup-node@v2`: Installs Node.js on the container. `node-version: 14` is used to install a Node.js version 14.
-- `run: npm ci`: Install node packages
-- `run: npx semantic-release`: Run the semantic release config to determin if a new tag should be created.
-
-### Conclusion
-
-Once you merge this into the main branch, any push to main will trigger this Github action. Next we will be looking at introducing a [Tailwind CSS](https://github.com/RichieMerchant/create-react-app-guide/blob/main/docs/tailwind-css-setup.md).
+To get started, follow the [docs](https://github.com/RichieMerchant/create-react-app-guide/blob/main/docs/getting-started.md)
