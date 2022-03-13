@@ -17,8 +17,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "concurrently --kill-others \"npm run build:css -- --watch\" \"react-scripts start\"",
+    "build": "npm run build:css && react-scripts build",
+    "build:css": "tailwind build -i ./src/styles/index.css -o ./src/styles/tailwind.css",
     "test": "react-scripts test",
     "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
@@ -51,7 +52,9 @@
     "@commitlint/config-conventional": "^16.2.1",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
+    "autoprefixer": "^10.4.2",
     "commitizen": "^4.2.4",
+    "concurrently": "^7.0.0",
     "conventional-changelog-conventionalcommits": "^4.6.3",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
@@ -59,7 +62,9 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.4",
+    "postcss": "^8.4.8",
     "prettier": "^2.5.1",
+    "tailwindcss": "^3.0.23",
     "tsc-files": "^1.1.3"
   },
   "config": {

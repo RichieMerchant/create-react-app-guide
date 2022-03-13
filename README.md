@@ -1,49 +1,134 @@
-# Github Actions
+# Tailwind CSS
 
-GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.
+## Install Tailwind CSS
 
-## Creating a workflow
+**Install Tailwind CSS**
+Install `tailwindcss` and its peer dependencies via npm, and then run the init command to generate both `tailwind.config.js` and `postcss.config.js`.
 
-1.  Create a `.github/workflows` directory in your repository on GitHub if this directory does not already exist.
-2.  In the `.github/workflows` directory, create a file named `semantic-release.yml`.
-3.  Copy the following YAML contents into the `semantic-release.yml` file:
-
-```yaml
-name: Semantic release
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  tag:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      - name: Install dependencies
-        run: npm ci
-      - name: Semantic release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+```shell
+npm install --save-dev tailwindcss postcss autoprefixer
+npx tailwindcss init -p
 ```
 
-Lets go through the Github actions yaml to understand what its doing.
+**Configure your template paths**
+Add the paths to all of your template files in your `tailwind.config.js` file.
 
-- `name: Semantic release`: This is the name displaying within Githubs Actions UI.
-- `branches: - main`: This tells the action when to run. This action will run when a git push occurs on the main branch.
-- `runs-on: ubuntu-latest`: The OS that the container will use ti run the action.
-- `uses: actions/checkout@v3`: Use the Github checkout actions to checkout the project into the container
-- `uses: actions/setup-node@v2`: Installs Node.js on the container. `node-version: 14` is used to install a Node.js version 14.
-- `run: npm ci`: Install node packages
-- `run: npx semantic-release`: Run the semantic release config to determin if a new tag should be created.
+```shell
+module.exports = {
+  content: [
+    "./src/**/*.tsx",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+### Including Tailwind in your CSS
+
+Inside your `src` folder create a folder named `styles`. This is where all your styles will be stored.
+
+Inside that folder, create a `tailwind.css` and an `index.css` file.
+
+The `index.css` file is where we’ll import tailwind’s base styles and configurations. `tailwind.css` will contain the compiled output of the `index.css`.
+
+Add the following to the `.gitignore` file:
+
+```
+# styles
+tailwind.css
+```
+
+#### Tailwind CSS components, utilities, and base styles
+
+add the following to your `index.css` file.
+
+```css
+//index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+`@tailwind` is a tailwind directive that is used to inject default `base styles`, `components`, `utilities` and custom configurations.
+
+`@tailwind base` \*\*injects Tailwind’s [base styles](https://unpkg.com/tailwindcss@2.0.3/dist/base.css), which is a combination of `[Normalize.css](https://necolas.github.io/normalize.css/)` and some additional base styles.
+
+`@tailwind components` injects any component (small reusable styles such as buttons, form elements, etc.) classes registered by plugins defined in your tailwind config file.
+
+`@tailwind utilities` injects all of Tailwind’s utility classes (including the default and your utilities), which are generated based on your config file.
+
+#### Configure your app to build your CSS file
+
+To configure your app to build your styles every time you run the `npm start` command, open your `package.json` file and replace the content of `"scripts"` with:
+
+```json
+ "scripts": {
+    "start": "concurrently --kill-others \"npm run build:css -- --watch\" \"react-scripts start\"",
+    "build": "npm run build:css && react-scripts build",
+    "build:css": "tailwind build -i ./src/styles/index.css -o ./src/styles/tailwind.css",
+    "test": "react-scripts test",
+    "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests",
+    "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
+    "lint:fix": "eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "prepare": "husky install"
+  },
+```
+
+Install a package called [concurrently](http://npmjs.org/package/concurrently).
+
+```shell
+npm install --save-dev concurrently
+```
+
+To import your CSS to the app, open your `index.tsx` file and import your Tailwind styles:
+
+```jsx
+import './styles/tailwind.css';
+```
+
+Your `index.tsx` file should now look similar to this:
+
+```jsx
+//index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './styles/tailwind.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+...
+```
+
+Delete the `App.css` from `App.tsx`.
+
+```jsx
+import './App.css';
+```
+
+Your `App.tsx` file should now look similar to this:
+
+```jsx
+function App() {
+  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+}
+
+export default App;
+```
+
+Delete the following files:
+
+```shell
+rm ./src/App.css ./src/index.css ./src/logo.svg
+```
 
 ### Conclusion
 
-Once you merge this into the main branch, any push to main will trigger this Github action. Next we will be looking at introducing a [Tailwind CSS](https://github.com/RichieMerchant/create-react-app-guide/blob/main/docs/tailwind-css-setup.md).
+There was a lot covered in the Tailwind CSS setup and it ony covers a fraction of what Tailwind CSS can do. I've included some resources that I think its worth going through before moving on to the next guide, [setting up Craco](https://github.com/RichieMerchant/create-react-app-guide/blob/main/docs/craco-setup.md).
+
+[Tailwind CSS - Create react App docs](https://tailwindcss.com/docs/guides/create-react-app)
+[Tailwind CSS - Adding custom styles](https://tailwindcss.com/docs/adding-custom-styles)
+[Tailwind CSS - official docs](https://tailwindcss.com/docs/installation)
+
+PS. Don't forget to update the test in `App.test.tsx` 😉
